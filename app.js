@@ -9,7 +9,7 @@ const getDinoData = async (e) => {
         })
         .then((data) => {
             return data.Dinos.map(dino => {
-                console.log(dino);
+                new Dino(dino.species, dino.weight, dino.height, dino.diet, dino.where, dino.when, dino.fact, dino.imagesrc);
             })
         })
         .catch((error) => {
@@ -18,26 +18,31 @@ const getDinoData = async (e) => {
         });
 }; 
 
+
 let name = document.getElementById('name');
 let feet = document.getElementById('feet');
 let inches = document.getElementById('inches');
 let diet = document.getElementById('diet');
 let btn = document.getElementById('btn');
 //let form = document.getElementById('dino-compare');
-
 let grid = document.getElementById('grid');
+
 
 // Create Dino Constructor
 class Dino {
-    constructor(calories = 250) {
-        this.calories = calories;
-        this.feet = feet;
-        this.inches = inches;
+    constructor(species, weight, height, diet, where, when, fact, imagesrc) {
+        species,
+        weight,
+        height,
+        diet,
+        where,
+        when,
+        fact,
+        imagesrc
     }
 }
 
 // Create Dino Objects
-const dino = new Dino();
 const dinoObject = await getDinoData();
 console.log(dinoObject);
 
@@ -72,10 +77,16 @@ const compareDino = () => {
 
 
 // Generate Tiles for each Dino in Array
-function createGrid([row = 3, column = 3] = []) {
-return `Generates a ${width} x ${height} grid`;
-
+function createGrid([row = 3, column = 3] = [], data) {
+    grid.innerHTML += `
+        <div class="grid">
+         
+        </div>
+    `;
+return `Generates a ${row} x ${column} grid`;
 }
+
+createGrid();
 // Add tiles to DOM
 
 // Remove form from screen
@@ -88,3 +99,4 @@ function loading_Done() {
         console.log("name" + name.value);
     })
 }
+//   <div>${data.fact}</div>
