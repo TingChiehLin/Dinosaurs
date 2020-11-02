@@ -46,11 +46,15 @@ class Dino {
 }
 
 // Create Dino Objects
-const dino = new Dino();
-console.log(dino);
-console.log(getDinoData());
-//const dinoObject = await getDinoData();
-//console.log(dinoObject);
+
+//console.log(getDinoData().then);
+// const dinoObject = await getDinoData().then;
+// console.log(dinoObject);
+
+const dinoObject = (async function() {
+    const dinoObject = await getDinoData();
+    return dinoObject;
+})()
 
 // Create Human Object
 class Human {
@@ -61,13 +65,6 @@ class Human {
         diet
     }
 }
-
-// Use IIFE to get human data from form
-const humanData = (function(data) {
-    return () => {
-        console.log(data);
-    };
-})();
 
 // Create Dino Compare Method 1
 // NOTE: Weight in JSON file is in lbs, height in inches. 
@@ -87,7 +84,7 @@ const compareDino = () => {
 function createGrid([row = 3, column = 3] = [], data) {
     grid.innerHTML += `
         <div class="grid">
-         
+        
         </div>
     `;
 return `Generates a ${row} x ${column} grid`;
@@ -105,14 +102,33 @@ let userData = {}
 function loading_Done() {
     // On button click, prepare and display infographic
     btn.addEventListener('click', (e) => {
-        userData = {
-            name: name.value,
-            feet: feet.value,
-            inches: inches.value,
-            diet: diet.value
-        };
-        humanData(userData);
+        let inputValue = document.forms["form"]["name"]["feet"]["inches"]["weight"]["diet"].value;
+
+        if (inputValue == "") {
+            alert("Please Filled in any correct information");
+            return false;
+        }
+
+        const humanData = (function() {
+            return userData = {
+                name: name.value,
+                feet: feet.value,
+                inches: inches.value,
+                diet: diet.value
+            };
+        })();
+    
+        console.log(humanData);
     })
 }
 //   <div>${data.fact}</div>
-
+/*
+<input id="name" class="form-field__full" type="name" name="name">
+<p>Height</p>
+<label>Feet: <input id="feet" class="form-field__short" type="number" name="feet"></label>
+<label>inches: <input id="inches" class="form-field__short" type="number" name="inches"></label>
+<p>Weight:</p>
+<label><input id="weight" class="form-field__full" type="number" name="weight">lbs</label>
+<p>Diet:</p>
+<select id="diet" class="form-field__full" name="diet">
+*/
