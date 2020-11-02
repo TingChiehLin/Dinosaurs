@@ -19,6 +19,14 @@ const getDinoData = () => {
         })
 };
 
+// let response = await fetch(url);
+// if (response.ok) { // if HTTP-status is 200-299
+//   // get the response body (the method explained below)
+//   let json = await response.json();
+// } else {
+//   alert("HTTP-Error: " + response.status);
+// }
+
 console.log(getDinoData());
 
 let name = document.getElementById('name');
@@ -26,8 +34,7 @@ let feet = document.getElementById('feet');
 let inches = document.getElementById('inches');
 let diet = document.getElementById('diet');
 let btn = document.getElementById('btn');
-
-let form = document.getElementById('dino-compare');
+//let form = document.getElementById('dino-compare');
 
 let grid = document.getElementById('grid');
 
@@ -52,11 +59,13 @@ class Human {
 }
 
 // Use IIFE to get human data from form
-(function(data) {
+const humanData = (function(data) {
     return () => {
-        
+       console.log('Some code from the arrow function'); 
     };
 })();
+
+humanData();
 
 // Create Dino Compare Method 1
 // NOTE: Weight in JSON file is in lbs, height in inches. 
@@ -81,14 +90,11 @@ return `Generates a ${width} x ${height} grid`;
 
 // Remove form from screen
 
-
-
 document.addEventListener("DOMContentLoaded", loading_Done);
 
 function loading_Done() {
     // On button click, prepare and display infographic
-    form.addEventListener('click', (e) => {
-        e.preventDefault();
+    btn.addEventListener('click', (e) => {
         console.log("name" + name.value);
     })
 }
