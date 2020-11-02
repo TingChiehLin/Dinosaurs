@@ -46,25 +46,28 @@ class Dino {
 }
 
 // Create Dino Objects
+const dino = new Dino();
+console.log(dino);
 console.log(getDinoData());
-const dinoObject = await getDinoData();
-console.log(dinoObject);
+//const dinoObject = await getDinoData();
+//console.log(dinoObject);
 
 // Create Human Object
 class Human {
-    constructor(){
-
+    constructor(name, feet, inches, diet){
+        name,
+        feet,
+        inches,
+        diet
     }
 }
 
 // Use IIFE to get human data from form
 const humanData = (function(data) {
     return () => {
-     
+        console.log(data);
     };
 })();
-
-humanData();
 
 // Create Dino Compare Method 1
 // NOTE: Weight in JSON file is in lbs, height in inches. 
@@ -97,10 +100,19 @@ createGrid();
 
 document.addEventListener("DOMContentLoaded", loading_Done);
 
+let userData = {}
+
 function loading_Done() {
     // On button click, prepare and display infographic
     btn.addEventListener('click', (e) => {
-        console.log("name" + name.value);
+        userData = {
+            name: name.value,
+            feet: feet.value,
+            inches: inches.value,
+            diet: diet.value
+        };
+        humanData(userData);
     })
 }
 //   <div>${data.fact}</div>
+
