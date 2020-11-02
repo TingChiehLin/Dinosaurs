@@ -1,4 +1,4 @@
-const getDinoData = async (e) => {
+const getDinoData = (e) => {
     return fetch("./dino.json")
         .then((res) => {
             if(res.ok) {
@@ -8,7 +8,7 @@ const getDinoData = async (e) => {
             }
         })
         .then((data) => {
-            data.Dinos.map(dino => new Dino(dino.species, dino.weight, dino.height, dino.diet, dino.where, dino.when, dino.fact, dino.img))
+           return data.Dinos.map(dino => new Dino(dino.species, dino.weight, dino.height, dino.diet, dino.where, dino.when, dino.fact, dino.img));
         })
         .catch((error) => {
             console.log(error);
@@ -24,7 +24,7 @@ let diet = document.getElementById('diet');
 
 //Button
 let btn = document.getElementById('btn');
-//let form = document.getElementById('dino-compare');
+let form = document.getElementById('dino-compare');
 
 //Grid
 let grid = document.getElementById('grid');
@@ -34,35 +34,32 @@ const images = [];
 // Create Dino Constructor
 class Dino {
     constructor(species, weight, height, diet, where, when, fact, img) {
-        species,
-        weight,
-        height,
-        diet,
-        where,
-        when,
-        fact,
-        img
+        this.species = species,
+        this.weight = weight,
+        this.height = height,
+        this.diet = diet,
+        this.where = where,
+        this.when = when,
+        this.fact = fact,
+        this.img = img
     }
 }
 
 // Create Dino Objects
+const data = getDinoData().then(dinos => {
+    console.log(dinos[0]);
+    return dinos;
+})
 
-//console.log(getDinoData().then);
-// const dinoObject = await getDinoData().then;
-// console.log(dinoObject);
-
-const dinoObject = (async function() {
-    const dinoObject = await getDinoData();
-    return dinoObject;
-})()
+console.log(data);
 
 // Create Human Object
 class Human {
     constructor(name, feet, inches, diet){
-        name,
-        feet,
-        inches,
-        diet
+        this.name = name,
+        this.feet = feet,
+        this.inches = inches,
+        this.diet = diet
     }
 }
 
@@ -102,6 +99,7 @@ let userData = {}
 function loading_Done() {
     // On button click, prepare and display infographic
     btn.addEventListener('click', (e) => {
+        form.style.display = 'none';
         let inputValue = document.forms["form"]["name"]["feet"]["inches"]["weight"]["diet"].value;
 
         if (inputValue == "") {
@@ -121,14 +119,3 @@ function loading_Done() {
         console.log(humanData);
     })
 }
-//   <div>${data.fact}</div>
-/*
-<input id="name" class="form-field__full" type="name" name="name">
-<p>Height</p>
-<label>Feet: <input id="feet" class="form-field__short" type="number" name="feet"></label>
-<label>inches: <input id="inches" class="form-field__short" type="number" name="inches"></label>
-<p>Weight:</p>
-<label><input id="weight" class="form-field__full" type="number" name="weight">lbs</label>
-<p>Diet:</p>
-<select id="diet" class="form-field__full" name="diet">
-*/
