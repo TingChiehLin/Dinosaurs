@@ -10,6 +10,16 @@ The application is for users who typing data by a form and then compare their da
 
 ## Get Started
 
+```
+npx serve - simulate a server
+```
+
+```
+http://localhost:5000/ - Type your link on the broswer
+```
+
+
+
 ## Result
 
 ## License

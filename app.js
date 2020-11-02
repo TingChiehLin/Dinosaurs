@@ -1,9 +1,8 @@
-const getDinoData = () => {
-    return fetch("http://localhost:3000/dino.json")
-        .then(res => res.json())
+const getDinoData = async (e) => {
+    return fetch("./dino.json")
         .then((res) => {
-            if(res.status.ok) {
-                return res;
+            if(res.ok) {
+                return res.json();
             } else {
                 throw new Error('Something goes wrong, Try again later.');
             }
@@ -16,18 +15,8 @@ const getDinoData = () => {
         .catch((error) => {
             console.log(error);
             throw new Error('Invaid Information');
-        })
-};
-
-// let response = await fetch(url);
-// if (response.ok) { // if HTTP-status is 200-299
-//   // get the response body (the method explained below)
-//   let json = await response.json();
-// } else {
-//   alert("HTTP-Error: " + response.status);
-// }
-
-console.log(getDinoData());
+        });
+}; 
 
 let name = document.getElementById('name');
 let feet = document.getElementById('feet');
@@ -49,7 +38,8 @@ class Dino {
 
 // Create Dino Objects
 const dino = new Dino();
-console.log("dino" + dino);
+const dinoObject = await getDinoData();
+console.log(dinoObject);
 
 // Create Human Object
 class Human {
@@ -61,7 +51,7 @@ class Human {
 // Use IIFE to get human data from form
 const humanData = (function(data) {
     return () => {
-       console.log('Some code from the arrow function'); 
+     
     };
 })();
 
