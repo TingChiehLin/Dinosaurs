@@ -8,9 +8,7 @@ const getDinoData = async (e) => {
             }
         })
         .then((data) => {
-            return data.Dinos.map(dino => {
-                new Dino(dino.species, dino.weight, dino.height, dino.diet, dino.where, dino.when, dino.fact, dino.imagesrc);
-            })
+            data.Dinos.map(dino => new Dino(dino.species, dino.weight, dino.height, dino.diet, dino.where, dino.when, dino.fact, dino.img))
         })
         .catch((error) => {
             console.log(error);
@@ -18,19 +16,24 @@ const getDinoData = async (e) => {
         });
 }; 
 
-
+//User Input
 let name = document.getElementById('name');
 let feet = document.getElementById('feet');
 let inches = document.getElementById('inches');
 let diet = document.getElementById('diet');
+
+//Button
 let btn = document.getElementById('btn');
 //let form = document.getElementById('dino-compare');
+
+//Grid
 let grid = document.getElementById('grid');
 
+const images = [];
 
 // Create Dino Constructor
 class Dino {
-    constructor(species, weight, height, diet, where, when, fact, imagesrc) {
+    constructor(species, weight, height, diet, where, when, fact, img) {
         species,
         weight,
         height,
@@ -38,11 +41,12 @@ class Dino {
         where,
         when,
         fact,
-        imagesrc
+        img
     }
 }
 
 // Create Dino Objects
+console.log(getDinoData());
 const dinoObject = await getDinoData();
 console.log(dinoObject);
 
