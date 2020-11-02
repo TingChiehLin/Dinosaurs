@@ -27,7 +27,7 @@ let inches = document.getElementById('inches');
 let diet = document.getElementById('diet');
 let btn = document.getElementById('btn');
 
-// let form = document.getElementById('dino-compare');
+let form = document.getElementById('dino-compare');
 
 let grid = document.getElementById('grid');
 
@@ -52,7 +52,11 @@ class Human {
 }
 
 // Use IIFE to get human data from form
-
+(function(data) {
+    return () => {
+        
+    };
+})();
 
 // Create Dino Compare Method 1
 // NOTE: Weight in JSON file is in lbs, height in inches. 
@@ -71,8 +75,9 @@ const compareDino = () => {
 // Generate Tiles for each Dino in Array
 function createGrid([row = 3, column = 3] = []) {
 return `Generates a ${width} x ${height} grid`;
+
 }
-    // Add tiles to DOM
+// Add tiles to DOM
 
 // Remove form from screen
 
@@ -82,7 +87,8 @@ document.addEventListener("DOMContentLoaded", loading_Done);
 
 function loading_Done() {
     // On button click, prepare and display infographic
-    btn.addEventListener('click', () => {
+    form.addEventListener('click', (e) => {
+        e.preventDefault();
         console.log("name" + name.value);
     })
 }
