@@ -29,8 +29,6 @@ let form = document.getElementById('dino-compare');
 //Grid
 let grid = document.getElementById('grid');
 
-const images = [];
-
 // Create Dino Constructor
 class Dino {
     constructor(species, weight, height, diet, where, when, fact, img) {
@@ -43,79 +41,136 @@ class Dino {
         this.fact = fact,
         this.img = img
     }
-}
 
-// Create Dino Objects
-const data = getDinoData().then(dinos => {
-    console.log(dinos[0]);
-    return dinos;
-})
+    compareWeight (humanWeight) {
+        const dinoToKgs = this.weight * 0.45359237;
+        const diffValue = Math.trunc(dinoToKgs - humanWeight);
+        const result = diffValue > 0 ? `${this.species} is heavier than you` : `${this.species} is lighter than you`;
+        return result;
+    }
 
-console.log(data);
+    compareHeight (humanHeight) {
+        const diffValue = Math.trunc(this.height - humanHeight);
+        const result = diffValue > 0 ? `${this.species} is taller than you` : `${this.species} is smaller than you`;
+        return result;
+    }
 
-// Create Human Object
-class Human {
-    constructor(name, feet, inches, diet){
-        this.name = name,
-        this.feet = feet,
-        this.inches = inches,
-        this.diet = diet
+    compareDiet (humanDiet) {
+        const result = '';
+        switch (this.diet) {
+            case 'carnivor':
+                result = `${this.species} is a carnivor. You can hunt meat together.`;
+                break;
+            case 'herbavor':
+                result = `${this.species} is a herbavor. Keep healthy and breath fresh air.`;
+                break;
+            case this.diet == humanDiet:
+                result = `${this.species} is the same as you. You are born in ancient time.`;
+                break;
+            default:
+                result = `${this.species} is a ${this.diet}. You are different from others.`;
+                break;
+        }
+
+        // if (this.diet == humanDiet) {
+        //     return `${this.species} is the same as you.`;
+        // } 
+
+        return result;
     }
 }
 
-// Create Dino Compare Method 1
-// NOTE: Weight in JSON file is in lbs, height in inches. 
-const compareDino = () => {
+// Create Dino Objects
+// const data = getDinoData().then(dinos => {
+//     dinos.map(e => {
+//         // console.log(e); 
+//     })
+//     return dinos;
+// })
 
+// Create Human Object
+class Human {
+    constructor(name, feet, inches, diet) {
+        this.name = name,
+        this.feet = feet,
+        this.inches = inches,
+        this.diet = diet,
+        this.species = 'human'
+    }
 }
 
-// Create Dino Compare Method 2
-// NOTE: Weight in JSON file is in lbs, height in inches.
-
-
-// Create Dino Compare Method 3
-// NOTE: Weight in JSON file is in lbs, height in inches.
-
+// const humanData = (function() {
+//     return (data) => {
+//         return data;
+//     }
+// })();
 
 // Generate Tiles for each Dino in Array
-function createGrid([row = 3, column = 3] = [], data) {
-    grid.innerHTML += `
-        <div class="grid">
-        
-        </div>
-    `;
-return `Generates a ${row} x ${column} grid`;
-}
+const createGrid = (userData) => {
 
-createGrid();
-// Add tiles to DOM
+    getDinoData().then(dinos => {
+        dinos.map(dino => {
+          
+            if (dino.species === "human") {
+                dino.species = userData.name;
+            } else if(dino.species === "Pigeon") {
+                dino.species = dino.species;
+                dinos.fact = dino.fact;
+            } else {
+                let randomResult = '';
+                const randomNum = Math.floor(Math.random() * 9);
+                switch (randomNum) {
+                    case 0:
+                        randomResult = dino.compareWeight(userData);
+                        break;
+                    case 1:
+                        randomResult = dino.compareHeight(userData);
+                        break;
+                    case 2:
+                        randomResult = dino.compareDiet(userData);
+                        break;
+                    case 3:
+                        result = `lived in ${dino.where}.`;
+                        break;
+                    case 4:
+                        result = `Found in ${dino.when}.`;
+                        break;
+                    default:
+                        result = dino.fact;
+                        break;
+                }
+            }
+            
+            const dino_img = `../images/${dino.img}.png`;
+            
+            grid.innerHTML = `
+                <div class="grid">
+                    <div class="grid-item">
+                        <h3>${dino.species}</h3>
+                        <img src="${dino_img}"/>
+                        <p>${dinos.fact}</p>
+                    </div>
+                </div>
+            `
+        })
+    }
+)};
 
-// Remove form from screen
+//createGrid();
 
 document.addEventListener("DOMContentLoaded", loading_Done);
-
-let userData = {}
 
 function loading_Done() {
     // On button click, prepare and display infographic
     btn.addEventListener('click', (e) => {
-        form.style.display = 'none';
-        let inputValue = document.forms["form"]["name"]["feet"]["inches"]["weight"]["diet"].value;
-
-        if (inputValue == "") {
-            alert("Please Filled in any correct information");
-            return false;
-        }
-
-        const humanData = (function() {
-            return userData = {
-                name: name.value,
-                feet: feet.value,
-                inches: inches.value,
-                diet: diet.value
-            };
-        })();
-    
-        console.log(humanData);
+      
+        // if (name.value == "" || feet.value == "" || inches.value == "" || diet.value == "") {
+        //     alert("Please Filled in any correct information");
+        //     return false;
+        // } else {
+            //form.style.display = 'none';
+            const humanData = new Human(name.value, feet.value, inches.value, diet.value);
+            createGrid(humanData);
+        //}
     })
 }
