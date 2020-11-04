@@ -29,6 +29,9 @@ http://localhost:5000/ - Type your link on the broswer
 ### Comparison Result
 <img width="1765" alt="Result" src="https://user-images.githubusercontent.com/17351134/98177677-4aa2e900-1f4f-11eb-95a8-cff819988934.png">
 
+## Link 
+[Dinosaur App](https://dinosaurs.vercel.app/)
+
 ## License
 
 This project is authorized MIT License

@@ -128,6 +128,22 @@ const createGrid = (userData) => {
                         break;
                 }
             }
+
+            /* Way 2
+            const content = document.createDocumentFragment();
+            const contain = document.createElement("div");
+            contain.setAttribute('class', 'grid-item')
+            const title = document.createElement("h3");
+            title.innerText = dino.species
+            const img = document.createElement("img");
+            img.setAttribute('src', dino_img)
+            const fact = document.createElement("p");
+            fact.innerText = randomResult
+            contain.appendChild(title)
+            contain.appendChild(img)
+            contain.appendChild(fact)
+            */
+
             const content = document.createElement('div');
             content.classList = 'grid-item';
             const dino_img = `../images/${dino.img}.png`;
