@@ -56,7 +56,7 @@ class Dino {
     }
 
     compareDiet (humanDiet) {
-        const result = '';
+        let result = '';
         switch (this.diet) {
             case 'carnivor':
                 result = `${this.species} is a carnivor. You can hunt meat together.`;
@@ -71,22 +71,9 @@ class Dino {
                 result = `${this.species} is a ${this.diet}. You are different from others.`;
                 break;
         }
-
-        // if (this.diet == humanDiet) {
-        //     return `${this.species} is the same as you.`;
-        // } 
-
         return result;
     }
 }
-
-// Create Dino Objects
-// const data = getDinoData().then(dinos => {
-//     dinos.map(e => {
-//         // console.log(e); 
-//     })
-//     return dinos;
-// })
 
 // Create Human Object
 class Human {
@@ -95,7 +82,8 @@ class Human {
         this.feet = feet,
         this.inches = inches,
         this.diet = diet,
-        this.species = 'human'
+        this.species = 'human',
+        this.img = 'human'
     }
 }
 
@@ -109,15 +97,15 @@ class Human {
 const createGrid = (userData) => {
 
     getDinoData().then(dinos => {
+        dinos.splice(4,0,userData);
         dinos.map(dino => {
-          
+            let randomResult = '';
             if (dino.species === "human") {
                 dino.species = userData.name;
             } else if(dino.species === "Pigeon") {
                 dino.species = dino.species;
-                dinos.fact = dino.fact;
+                randomResult = dino.fact;
             } else {
-                let randomResult = '';
                 const randomNum = Math.floor(Math.random() * 9);
                 switch (randomNum) {
                     case 0:
@@ -130,33 +118,29 @@ const createGrid = (userData) => {
                         randomResult = dino.compareDiet(userData);
                         break;
                     case 3:
-                        result = `lived in ${dino.where}.`;
+                        randomResult = `lived in ${dino.where}.`;
                         break;
                     case 4:
-                        result = `Found in ${dino.when}.`;
+                        randomResult = `Found in ${dino.when}.`;
                         break;
                     default:
-                        result = dino.fact;
+                        randomResult = dino.fact;
                         break;
                 }
             }
-            
+            const content = document.createElement('div');
+            content.classList = 'grid-item';
             const dino_img = `../images/${dino.img}.png`;
             
-            grid.innerHTML = `
-                <div class="grid">
-                    <div class="grid-item">
-                        <h3>${dino.species}</h3>
-                        <img src="${dino_img}"/>
-                        <p>${dinos.fact}</p>
-                    </div>
-                </div>
-            `
+            content.innerHTML = `
+                <h3>${dino.species}</h3>
+                <img src="${dino_img}"/>
+                <p>${randomResult}</p>
+            ` 
+            grid.appendChild(content);
         })
     }
 )};
-
-//createGrid();
 
 document.addEventListener("DOMContentLoaded", loading_Done);
 
@@ -164,13 +148,13 @@ function loading_Done() {
     // On button click, prepare and display infographic
     btn.addEventListener('click', (e) => {
       
-        // if (name.value == "" || feet.value == "" || inches.value == "" || diet.value == "") {
-        //     alert("Please Filled in any correct information");
-        //     return false;
-        // } else {
-            //form.style.display = 'none';
+        if (name.value == "" || feet.value == "" || inches.value == "" || diet.value == "") {
+            alert("Please Filled in any correct information");
+            return false;
+        } else {
+            form.style.display = 'none';
             const humanData = new Human(name.value, feet.value, inches.value, diet.value);
             createGrid(humanData);
-        //}
+        }
     })
 }
